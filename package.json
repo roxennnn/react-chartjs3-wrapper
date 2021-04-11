@@ -1,3 +1,66 @@
 {
-  "name": "react-chartjs3-wrapper"
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "types/*.d.ts"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "react-chartjs3-wrapper",
+  "author": "Roberto Rossini",
+  "description": "A simple wrapper React component for Chart.js 3",
+  "repository": "roxennnn/react-chartjs3-wrapper",
+  "module": "dist/react-chartjs3-wrapper.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/react-chartjs3-wrapper.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/react-chartjs3-wrapper.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.10.2",
+    "@types/lodash": "^4.14.168",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "chart.js": "^3.0.2",
+    "husky": "^6.0.0",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "size-limit": "^4.10.2",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  }
 }
