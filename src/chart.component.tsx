@@ -1,5 +1,4 @@
-import { Chart, ChartTypeRegistry, Plugin } from 'chart.js';
-import { AnyObject } from 'chart.js/types/basic';
+import { Chart, Plugin } from 'chart.js';
 import _uniqueId from 'lodash/uniqueId';
 import React, { useEffect, useState } from 'react';
 import {
@@ -11,7 +10,7 @@ import {
 /* Draw a vertical line when hovering in line charts */
 const makeVerticalCrosshairPlugin = (
   options?: IVerticalCrosshairPluginOptions
-): Plugin<keyof ChartTypeRegistry, AnyObject> => ({
+): Plugin => ({
   id: 'verticalCrosshair',
   beforeDatasetsDraw: (chartInstance: ExtendedChart) => {
     if (chartInstance?.tooltip?._active?.length) {
@@ -95,21 +94,3 @@ export const ChartComponent = (props: ChartProps) => {
 
   return <canvas id={canvasId}></canvas>;
 };
-
-/***************************************
- *             Registrations           *
- ***************************************/
-// Generally speaking for a chart you need its controller so linecontroller for line chart,
-// piecontroller for pie chart etc. You need the element so a lineElement and pointElement
-// for line or radar chart, arcElement for pie, doughnut of polar area chart and barElement for bar.
-// And then you need to import the supplied plugins for the title, filler (for area charts)
-// legend and the tooltip
-
-/* No tree-shakeable */
-// export const registerAll = (): void => Chart.register(...registerables);
-
-// export const customRegister = (...toRegister: ChartComponentLike[]): void =>
-//   Chart.register(...toRegister);
-
-/* From type declarations */
-// export { IVerticalCrosshairPluginOptions, ExtendedChart };

@@ -1,6 +1,14 @@
-# React Chart.js 3 Wrapper
+<p align="center">
+  Just a simple wrapper React component of <a href="https://github.com/chartjs/Chart.js">Chart.js</a> 3.0.
+</p>
 
-A simple Wrapper React component of [Chart.js](https://github.com/chartjs/Chart.js) 3.0.
+<p align="center">
+  <img alt="npm" src="https://img.shields.io/npm/v/react-chartjs3-wrapper">
+  <img alt="GitHub" src="https://img.shields.io/github/license/roxennnn/react-chartjs3-wrapper">
+</p>
 
-![npm](https://img.shields.io/npm/v/react-chartjs3-wrapper)
-![GitHub](https://img.shields.io/github/license/roxennnn/react-chartjs3-wrapper)
+## Installation
+
+## Usage
+
+## License
