@@ -1,4 +1,2 @@
-export * from './chart.component';
+export * from './chartjs.component';
 export * from './registrations';
-/* From type declarations */
-// export { IVerticalCrosshairPluginOptions, ExtendedChart };

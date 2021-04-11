@@ -1,11 +1,16 @@
 import { Chart, Plugin } from 'chart.js';
-import _uniqueId from 'lodash/uniqueId';
+import _uniqueId from 'lodash-es/uniqueId';
 import React, { useEffect, useState } from 'react';
 import {
   ChartProps,
   ExtendedChart,
   IVerticalCrosshairPluginOptions,
 } from '../types';
+
+const CROSSHAR_DEFAULT = {
+  color: '#000000',
+  lineWidth: 2,
+};
 
 /* Draw a vertical line when hovering in line charts */
 const makeVerticalCrosshairPlugin = (
@@ -27,8 +32,12 @@ const makeVerticalCrosshairPlugin = (
         ctx.beginPath();
         ctx.moveTo(x, topY);
         ctx.lineTo(x, bottomY);
-        ctx.lineWidth = options && options?.lineWidth ? options.lineWidth : 2;
-        ctx.strokeStyle = options && options?.color ? options.color : '#000000';
+        ctx.lineWidth =
+          options && options?.lineWidth
+            ? options.lineWidth
+            : CROSSHAR_DEFAULT.lineWidth;
+        ctx.strokeStyle =
+          options && options?.color ? options.color : CROSSHAR_DEFAULT.color;
         ctx.stroke();
         ctx.restore();
       }
@@ -36,7 +45,7 @@ const makeVerticalCrosshairPlugin = (
   },
 });
 
-export const ChartComponent = (props: ChartProps) => {
+export const ChartJsComponent = (props: ChartProps) => {
   const {
     type,
     data,

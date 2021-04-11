@@ -4,37 +4,113 @@
 // And then you need to import the supplied plugins for the title, filler (for area charts)
 // legend and the tooltip
 
-import {
-  BarController,
-  BarElement,
-  CategoryScale,
-  Chart,
-  ChartComponentLike,
-  LinearScale,
-  LineController,
-  LineElement,
-  PointElement,
-  registerables,
-} from 'chart.js';
+import * as ChartJs from 'chart.js';
+import { IRegistrationConfig } from '../types';
+
+const REGISTRABLES_FIELDS = [
+  'line',
+  'bar',
+  'pie',
+  'bubble',
+  'doughnut',
+  'polarArea',
+  'radar',
+  'scatter',
+  'legend',
+  'tooltip',
+  'title',
+  'filler',
+  'decimation',
+];
+const REGISTRABLES_CONFIG_MAP: { [type: string]: string[] } = {
+  /* Charts */
+  line: [
+    'LineController',
+    'LineElement',
+    'PointElement',
+    'LinearScale',
+    'CategoryScale',
+  ],
+  bar: [
+    'BarController',
+    'BarElement',
+    'PointElement',
+    'LinearScale',
+    'CategoryScale',
+  ],
+  pie: ['PieController', 'ArcElement'],
+  bubble: ['BubbleController', 'LinearScale', 'PointElement'],
+  doughnut: ['DoughnutController', 'ArcElement'],
+  polarArea: ['PolarAreaController', 'RadialLinearScale'],
+  radar: [
+    'RadarController',
+    'RadialLinearScale',
+    'PointElement',
+    'LineElement',
+  ],
+  scatter: ['ScatterController', 'LinearScale', 'PointElement', 'LineElement'],
+
+  /* Accessories */
+  legend: ['Legend'],
+  tooltip: ['Tooltip'],
+  title: ['Title'],
+  filler: ['Filler'],
+  decimation: ['Decimation'],
+};
+const REGISTRABLES_MAP = new Map<string, ChartJs.ChartComponentLike>([
+  ['ArcElement', ChartJs.ArcElement],
+  ['LineElement', ChartJs.LineElement],
+  ['BarElement', ChartJs.BarElement],
+  ['PointElement', ChartJs.PointElement],
+  ['BarController', ChartJs.BarController],
+  ['BubbleController', ChartJs.BubbleController],
+  ['DoughnutController', ChartJs.DoughnutController],
+  ['LineController', ChartJs.LineController],
+  ['PieController', ChartJs.PieController],
+  ['PolarAreaController', ChartJs.PolarAreaController],
+  ['RadarController', ChartJs.RadarController],
+  ['ScatterController', ChartJs.ScatterController],
+  ['CategoryScale', ChartJs.CategoryScale],
+  ['LinearScale', ChartJs.LinearScale],
+  ['LogarithmicScale', ChartJs.LogarithmicScale],
+  ['RadialLinearScale', ChartJs.RadialLinearScale],
+  ['TimeScale', ChartJs.TimeScale],
+  ['TimeSeriesScale', ChartJs.TimeSeriesScale],
+  // ['Decimation', ChartJs.Decimation],
+  ['Filler', ChartJs.Filler],
+  ['Legend', ChartJs.Legend],
+  ['Title', ChartJs.Title],
+  ['Tooltip', ChartJs.Tooltip],
+]);
 
 /* No tree-shakeable */
-export const registerAll = (): void => Chart.register(...registerables);
+export const registerAll = (): void =>
+  ChartJs.Chart.register.apply(
+    null,
+    Object.values(ChartJs).filter(
+      (chartClass: any) => chartClass.id
+    ) as ChartJs.ChartComponentLike[]
+  );
 
-export const customRegister = (...toRegister: ChartComponentLike[]): void =>
-  Chart.register(...toRegister);
+export const customRegister = (
+  ...toRegister: ChartJs.ChartComponentLike[]
+): void => ChartJs.Chart.register(...toRegister);
 
-const COMMON_TO_REGISTER: ChartComponentLike[] = [
-  PointElement,
-  CategoryScale,
-  LinearScale,
-];
+export const conditionalRegistration = (config: IRegistrationConfig): void => {
+  /* Get names of necessary registrables */
+  const toBeRegistered: string[] = [];
+  REGISTRABLES_FIELDS.forEach((e: string) => {
+    if (config && config[e as keyof IRegistrationConfig])
+      toBeRegistered.push(...REGISTRABLES_CONFIG_MAP[e]);
+  });
+  const uniqueToBeRegistered: string[] = toBeRegistered.filter(
+    (x: string, i: number, a: string[]) => a.indexOf(x) === i
+  );
 
-const LINE_TO_REGISTER: ChartComponentLike[] = [LineController, LineElement];
-
-const BAR_TO_REGISTER: ChartComponentLike[] = [BarController, BarElement];
-
-export const registerLine = (...toRegister: ChartComponentLike[]): void =>
-  Chart.register(...COMMON_TO_REGISTER, ...LINE_TO_REGISTER, ...toRegister);
-
-export const registerBar = (...toRegister: ChartComponentLike[]): void =>
-  Chart.register(...COMMON_TO_REGISTER, ...BAR_TO_REGISTER, ...toRegister);
+  /* Register */
+  ChartJs.Chart.register(
+    uniqueToBeRegistered
+      .map((e: string) => REGISTRABLES_MAP.get(e) as ChartJs.ChartComponent)
+      .concat(config?.others ? config.others : [])
+  );
+};

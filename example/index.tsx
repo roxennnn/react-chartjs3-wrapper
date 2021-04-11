@@ -1,7 +1,7 @@
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, Filler, PieController } from 'chart.js';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { ChartComponent } from '../.';
+import { ChartJsComponent, conditionalRegistration } from '../.';
 
 const data = {
   labels: ['1', '2', '3', '4', '5', '6'],
@@ -25,9 +25,17 @@ const options: ChartOptions = {
 };
 
 const App = () => {
+  React.useEffect(() => {
+    conditionalRegistration({
+      line: true,
+      legend: true,
+      title: true,
+      others: [PieController, Filler],
+    });
+  }, []);
   return (
     <div>
-      <ChartComponent
+      <ChartJsComponent
         type="line"
         data={data}
         options={options}
