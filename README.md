@@ -1,5 +1,5 @@
 <p align="center">
-  Just a simple wrapper React component for <a href="https://github.com/chartjs/Chart.js">Chart.js</a> 3.
+  Just a simple wrapper React component for <a href="https://www.chartjs.org/">Chart.js</a> 3.
 </p>
 
 <p align="center">
