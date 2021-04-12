@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <img alt="npm" src="https://img.shields.io/npm/v/react-chartjs3-wrapper">
-  <img alt="GitHub" src="https://img.shields.io/github/license/roxennnn/react-chartjs3-wrapper">
+  <a href="https://www.npmjs.com/package/react-chartjs3-wrapper"><img alt="npm" src="https://img.shields.io/npm/v/react-chartjs3-wrapper"></a>
+  <a href="https://github.com/roxennnn/react-chartjs3-wrapper/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/roxennnn/react-chartjs3-wrapper"></a>
 </p>
 
 ## Installation
