@@ -39,6 +39,11 @@
   "author": "Roberto Rossini",
   "description": "A simple wrapper React component for Chart.js 3",
   "repository": "roxennnn/react-chartjs3-wrapper",
+  "keywords": [
+    "react",
+    "chart.js",
+    "crosshair"
+  ],
   "module": "dist/react-chartjs3-wrapper.esm.js",
   "size-limit": [
     {
