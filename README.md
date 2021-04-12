@@ -75,6 +75,8 @@ Being Chart.js 3 *tree-shakeable*, controllers, elements, scales and plugins to 
 The registration functions should be called at the beginning of the component (e.g., inside the `useEffect` hook).
 
 ## Example
+The following displays the result of the provided [example](https://github.com/roxennnn/react-chartjs3-wrapper/tree/master/example): a line chart with the vertical crosshair plugin.
+
 ![example](./example/example.gif)
 
 ## License
