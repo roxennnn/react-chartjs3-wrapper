@@ -1,25 +1,34 @@
-import { ChartOptions, Filler, PieController } from 'chart.js';
+import { ChartOptions } from 'chart.js';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { ChartJsComponent, conditionalRegistration } from '../.';
 
 const data = {
-  labels: ['1', '2', '3', '4', '5', '6'],
+  labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
   datasets: [
     {
       label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      data: [12, 19, 3, 5, 2, 3, 15, 20, 5, 11],
       fill: false,
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgba(255, 99, 132, 0.2)',
+      backgroundColor: 'orange',
+      borderColor: 'orange',
     },
   ],
 };
 
 const options: ChartOptions = {
+  hover: {
+    mode: 'index',
+    intersect: false,
+  },
   plugins: {
     tooltip: {
-      caretPadding: 100,
+      enabled: true,
+      usePointStyle: true,
+      mode: 'index',
+      position: 'average',
+      intersect: false,
+      caretPadding: 20, // Distance from the point
     },
   },
 };
@@ -30,7 +39,6 @@ const App = () => {
       line: true,
       legend: true,
       title: true,
-      others: [PieController, Filler],
     });
   }, []);
   return (
