@@ -1,20 +1,101 @@
 import { Chart, Plugin } from 'chart.js';
 import _uniqueId from 'lodash-es/uniqueId';
 import React, { useEffect, useState } from 'react';
-import {
-  ChartProps,
-  ExtendedChart,
-  IVerticalCrosshairPluginOptions,
-} from '../types';
+import { ChartProps, ExtendedChart, ICrosshairPluginOptions } from '../types';
 
-const CROSSHAR_DEFAULT = {
-  color: '#000000',
+const CROSSHAIR_DEFAULT = {
+  strokeStyle: '#000000',
   lineWidth: 2,
+  dashedSegments: [10],
+};
+
+const drawLine = (
+  ctx: CanvasRenderingContext2D,
+  startPoint: number[],
+  endPoint: number[],
+  options?: ICrosshairPluginOptions
+): void => {
+  ctx.save();
+  ctx.beginPath();
+
+  if (options?.dashed) {
+    ctx.setLineDash(
+      options?.dashedSegments
+        ? options.dashedSegments
+        : CROSSHAIR_DEFAULT.dashedSegments
+    );
+  }
+
+  ctx.moveTo(startPoint[0], startPoint[1]);
+  ctx.lineTo(endPoint[0], endPoint[1]);
+
+  /* Options */
+  if (options) {
+    // Defaults
+    ctx.lineWidth =
+      options && options?.lineWidth
+        ? options.lineWidth
+        : CROSSHAIR_DEFAULT.lineWidth;
+    ctx.strokeStyle =
+      options && options?.strokeStyle
+        ? options.strokeStyle
+        : CROSSHAIR_DEFAULT.strokeStyle;
+
+    // Others
+    if (options?.fillStyle) {
+      ctx.fillStyle = options.fillStyle;
+    }
+    if (options?.filter) {
+      ctx.filter = options.filter;
+    }
+    if (options?.font) {
+      ctx.font = options.font;
+    }
+    if (options?.globalAlpha) {
+      ctx.globalAlpha = options.globalAlpha;
+    }
+    if (options?.globalCompositeOperation) {
+      ctx.globalCompositeOperation = options.globalCompositeOperation;
+    }
+    if (options?.lineCap) {
+      ctx.lineCap = options.lineCap;
+    }
+    if (options?.lineDashOffset) {
+      ctx.lineDashOffset = options.lineDashOffset;
+    }
+    if (options?.lineJoin) {
+      ctx.lineJoin = options.lineJoin;
+    }
+    if (options?.lineWidth) {
+      ctx.lineWidth = options.lineWidth;
+    }
+    if (options?.miterLimit) {
+      ctx.miterLimit = options.miterLimit;
+    }
+    if (options?.shadowBlur) {
+      ctx.shadowBlur = options.shadowBlur;
+    }
+    if (options?.shadowColor) {
+      ctx.shadowColor = options.shadowColor;
+    }
+    if (options?.shadowOffsetX) {
+      ctx.shadowOffsetX = options.shadowOffsetX;
+    }
+    if (options?.shadowOffsetY) {
+      ctx.shadowOffsetY = options.shadowOffsetY;
+    }
+    if (options?.strokeStyle) {
+      ctx.strokeStyle = options.strokeStyle;
+    }
+  }
+
+  ctx.stroke();
+  ctx.restore();
 };
 
 /* Draw a vertical line when hovering in line charts */
 const makeVerticalCrosshairPlugin = (
-  options?: IVerticalCrosshairPluginOptions
+  options?: ICrosshairPluginOptions
 ): Plugin => ({
   id: 'verticalCrosshair',
   beforeDatasetsDraw: (chartInstance: ExtendedChart) => {
@@ -25,21 +106,32 @@ const makeVerticalCrosshairPlugin = (
       // draw line
       if (ctx && activePoint) {
         const x: number = activePoint?.element?.x;
-        const topY: number = chartInstance?.legend?.bottom;
+        const topY: number = chartInstance?.chartArea?.top;
         const bottomY: number = chartInstance?.chartArea?.bottom;
 
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(x, topY);
-        ctx.lineTo(x, bottomY);
-        ctx.lineWidth =
-          options && options?.lineWidth
-            ? options.lineWidth
-            : CROSSHAR_DEFAULT.lineWidth;
-        ctx.strokeStyle =
-          options && options?.color ? options.color : CROSSHAR_DEFAULT.color;
-        ctx.stroke();
-        ctx.restore();
+        drawLine(ctx, [x, topY], [x, bottomY], options);
+      }
+    }
+  },
+});
+
+/* Draw a horizontal line when hovering in line charts */
+const makeHorizontalCrosshairPlugin = (
+  options?: ICrosshairPluginOptions
+): Plugin => ({
+  id: 'horizontalCrosshair',
+  beforeDatasetsDraw: (chartInstance: ExtendedChart) => {
+    if (chartInstance?.tooltip?._active?.length) {
+      const activePoint = chartInstance?.tooltip?._active[0];
+      const ctx: CanvasRenderingContext2D | null = chartInstance?.ctx;
+
+      // draw line
+      if (ctx && activePoint) {
+        const y: number = activePoint?.element?.y;
+        const leftX: number = chartInstance?.chartArea?.left;
+        const rightX: number = chartInstance?.chartArea?.right;
+
+        drawLine(ctx, [leftX, y], [rightX, y], options);
       }
     }
   },
@@ -52,7 +144,9 @@ export const ChartJsComponent = (props: ChartProps) => {
     options,
     plugins,
     enableVerticalCrosshair,
-    crosshairOptions,
+    crosshairVerticalOptions,
+    enableHorizontalCrosshair,
+    crosshairHorizontalOptions,
   } = props;
 
   /* Create random canvasId */
@@ -68,24 +162,38 @@ export const ChartJsComponent = (props: ChartProps) => {
       type === 'line' && !!enableVerticalCrosshair;
 
     const ctx = document.getElementById(canvasId);
+
+    /* Plugins */
+    const activePlugins: Plugin[] = [];
+    if (useVerticalCrosshair) {
+      activePlugins.push(makeVerticalCrosshairPlugin(crosshairVerticalOptions));
+    }
+    if (enableHorizontalCrosshair) {
+      activePlugins.push(
+        makeHorizontalCrosshairPlugin(crosshairHorizontalOptions)
+      );
+    }
+    if (plugins) {
+      activePlugins.push(...plugins);
+    }
+
+    /* Create chart */
     const newChart = new Chart(ctx as HTMLCanvasElement, {
       type: type,
       data: {
         datasets: [],
       },
-      plugins: (useVerticalCrosshair
-        ? [makeVerticalCrosshairPlugin(crosshairOptions)]
-        : []
-      ).concat(!!plugins ? plugins : []),
+      plugins: activePlugins,
     });
     setChart(newChart);
   }, [
     type,
     canvasId,
     plugins,
-    plugins,
     enableVerticalCrosshair,
-    crosshairOptions,
+    crosshairVerticalOptions,
+    enableHorizontalCrosshair,
+    crosshairHorizontalOptions,
   ]);
 
   /* Update Chart Object */

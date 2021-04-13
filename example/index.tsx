@@ -48,6 +48,13 @@ const App = () => {
         data={data}
         options={options}
         enableVerticalCrosshair={true}
+        enableHorizontalCrosshair={true}
+        crosshairVerticalOptions={{
+          dashed: true,
+        }}
+        crosshairHorizontalOptions={{
+          dashed: true,
+        }}
       />
     </div>
   );
