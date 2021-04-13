@@ -46,13 +46,27 @@ The `ChartJsComponent` is a simple component which wraps a Chart.js chart. The a
 * `options`: the chart options: (it must be a Chart.js `ChartOptions` object)
 * `plugins`: the plugins used by the chart (it must be a Chart.js `Plugin` object array)
 
-### Vertical Crosshair
-Moreover, there are 2 more props which can be used to enable a plugin included in the library: the **Vertical Crosshair** plugin. These props are:
-* `enableVerticalCrosshair`: to enable the plugin
-* `crosshairOptions`: options used to customize the crosshair:
-  * `color`: the color of the vertical crosshair (default is `#000000`)
-  * `lineWidth`: the width of the vertical crosshair (default is `2`)
-
+### Crosshairs
+Moreover, there are 2 plugins which can be enabled through 2 props: the **Vertical Crosshair** and the **Horizontal Crosshair** plugins. The 2 props are `enableVerticalCrosshair` and `enableHorizonalCrosshair`. In order to customize these 2 plugins, the corresponding option props can be used (`crosshairVerticalOptions` and `crosshairHorizontalOptions` respectively). These objects mostly contains HTML canvas element options. The following are the properties present in the option objects:
+```ts
+dashed?: boolean;
+dashedSegments?: number[]; // default: [10]
+fillStyle?: string | CanvasGradient | CanvasPattern;
+filter?: string;
+font?: string;
+globalAlpha?: number;
+globalCompositeOperation?: string;
+lineCap?: CanvasLineCap;
+lineDashOffset?: number;
+lineJoin?: CanvasLineJoin;
+lineWidth?: number; // default: 2
+miterLimit?: number;
+shadowBlur?: number;
+shadowColor?: string;
+shadowOffsetX?: number;
+shadowOffsetY?: number;
+strokeStyle?: string | CanvasGradient | CanvasPattern; // default: #000000
+```
 
 ### Registration
 Being Chart.js 3 *tree-shakeable*, controllers, elements, scales and plugins to use are needed to be imported and registered. There are some functions to simplify these procedures:
