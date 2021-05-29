@@ -55,6 +55,7 @@ const App = () => {
         crosshairHorizontalOptions={{
           dashed: true,
         }}
+        transferChartImage={(data: any) => {}} // TODO
       />
     </div>
   );

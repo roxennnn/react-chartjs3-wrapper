@@ -147,6 +147,7 @@ export const ChartJsComponent = (props: ChartProps) => {
     crosshairVerticalOptions,
     enableHorizontalCrosshair,
     crosshairHorizontalOptions,
+    transferChartImage,
   } = props;
 
   /* Create random canvasId */
@@ -202,7 +203,14 @@ export const ChartJsComponent = (props: ChartProps) => {
       if (chart) {
         chart.data = data;
         if (options) {
-          chart.options = options;
+          chart.options = {
+            ...options,
+            animation: {
+              onComplete: () => {
+                transferChartImage(chart.toBase64Image());
+              },
+            },
+          };
         }
         chart.update();
       }

@@ -47,4 +47,6 @@ export interface ChartProps {
   crosshairVerticalOptions?: ICrosshairPluginOptions;
   enableHorizontalCrosshair?: boolean;
   crosshairHorizontalOptions?: ICrosshairPluginOptions;
+  /* New */
+  transferChartImage: (data: any) => void; // FIXME
 }
