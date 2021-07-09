@@ -217,5 +217,7 @@ export const ChartJsComponent = (props: ChartProps) => {
     }
   }, [chart, data, options, type]);
 
-  return <canvas id={canvasId}></canvas>;
+  return (
+    <canvas id={canvasId} style={{ width: '100%', height: '100%' }}></canvas>
+  );
 };

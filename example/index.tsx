@@ -17,6 +17,7 @@ const data = {
 };
 
 const options: ChartOptions = {
+  maintainAspectRatio: false,
   hover: {
     mode: 'index',
     intersect: false,
@@ -42,7 +43,7 @@ const App = () => {
     });
   }, []);
   return (
-    <div>
+    <div style={{ width: 400, height: 400 }}>
       <ChartJsComponent
         type="line"
         data={data}
