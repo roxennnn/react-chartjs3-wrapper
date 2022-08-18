@@ -1,4 +1,5 @@
 import { Chart, Plugin } from 'chart.js';
+import 'chartjs-chart-geo';
 import _uniqueId from 'lodash-es/uniqueId';
 import React, { useEffect, useState } from 'react';
 import { ChartProps, ExtendedChart, ICrosshairPluginOptions } from '../types';
@@ -55,7 +56,7 @@ const drawLine = (
       ctx.globalAlpha = options.globalAlpha;
     }
     if (options?.globalCompositeOperation) {
-      ctx.globalCompositeOperation = options.globalCompositeOperation;
+      ctx.globalCompositeOperation = options.globalCompositeOperation as any;
     }
     if (options?.lineCap) {
       ctx.lineCap = options.lineCap;

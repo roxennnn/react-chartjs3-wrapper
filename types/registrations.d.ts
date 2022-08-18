@@ -14,6 +14,9 @@ export interface IRegistrationConfig {
   legend?: boolean;
   title?: boolean;
   tooltip?: boolean;
+  /* Chart Geo */
+  choropleth?: boolean;
+  bubbleMap?: boolean;
   /* Other */
   others?: ChartComponentLike[];
 }

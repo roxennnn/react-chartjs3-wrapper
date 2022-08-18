@@ -42,6 +42,7 @@ const MyComponent = () => {
 ### Component
 The `ChartJsComponent` is a simple component which wraps a Chart.js chart. The available props are:
 * `type`: the type of the chart (`line`, `bar`, `pie`, ...)
+  * **NEW**: `choropleth` and `bubbleMap` from [chartjs-chart-geo](https://github.com/sgratzl/chartjs-chart-geo) plugin are now available!
 * `data`: the data to be displayed in the chart (it must be a Chart.js `ChartData` object)
 * `options`: the chart options: (it must be a Chart.js `ChartOptions` object)
 * `plugins`: the plugins used by the chart (it must be a Chart.js `Plugin` object array)
@@ -84,6 +85,8 @@ Being Chart.js 3 *tree-shakeable*, controllers, elements, scales and plugins to 
   * `legend`: enable chart legend
   * `title`: enable chart title
   * `tooltip`: enable chart tooltip
+  * **NEW** `choropleth`: enable choropleth charts from [chartjs-chart-geo](https://github.com/sgratzl/chartjs-chart-geo)
+  * **NEW** `bubbleMap`: enable bubbleMap charts from [chartjs-chart-geo](https://github.com/sgratzl/chartjs-chart-geo)
   * `others`: used to specify a list of available items to be specified not included in the previous options but needed (e.g.,  `TimeSeriesScale`) 
 
 The registration functions should be called at the beginning of the component (e.g., inside the `useEffect` hook).

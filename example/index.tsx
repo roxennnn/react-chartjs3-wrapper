@@ -42,6 +42,7 @@ const App = () => {
       title: true,
     });
   }, []);
+
   return (
     <div style={{ width: 400, height: 400 }}>
       <ChartJsComponent

@@ -5,6 +5,7 @@
 // legend and the tooltip
 
 import * as ChartJs from 'chart.js';
+import * as ChartGeo from 'chartjs-chart-geo';
 import { IRegistrationConfig } from '../types';
 
 const REGISTRABLES_FIELDS = [
@@ -21,6 +22,9 @@ const REGISTRABLES_FIELDS = [
   'title',
   'filler',
   'decimation',
+  // ChartGeo
+  'choropleth',
+  'bubbleMap',
 ];
 const REGISTRABLES_CONFIG_MAP: { [type: string]: string[] } = {
   /* Charts */
@@ -56,6 +60,17 @@ const REGISTRABLES_CONFIG_MAP: { [type: string]: string[] } = {
   title: ['Title'],
   filler: ['Filler'],
   decimation: ['Decimation'],
+
+  /* Chart Geo */
+  choropleth: ['Choropleth', 'ProjectionScale', 'ColorScale', 'GeoFeature'],
+  bubbleMap: [
+    'BubbleMapController',
+    'ProjectionScale',
+    'SizeScale',
+    'CategoryScale',
+    'PointElement',
+    'GeoFeature',
+  ],
 };
 const REGISTRABLES_MAP = new Map<string, ChartJs.ChartComponentLike>([
   ['ArcElement', ChartJs.ArcElement],
@@ -81,6 +96,14 @@ const REGISTRABLES_MAP = new Map<string, ChartJs.ChartComponentLike>([
   ['Legend', ChartJs.Legend],
   ['Title', ChartJs.Title],
   ['Tooltip', ChartJs.Tooltip],
+  //
+  ['Choropleth', ChartGeo.ChoroplethController],
+  ['ProjectionScale', ChartGeo.ProjectionScale],
+  ['ColorScale', ChartGeo.ColorScale],
+  ['GeoFeature', ChartGeo.GeoFeature],
+  //
+  ['BubbleMapController', ChartGeo.BubbleMapController],
+  ['SizeScale', ChartGeo.SizeScale],
 ]);
 
 /* No tree-shakeable */
