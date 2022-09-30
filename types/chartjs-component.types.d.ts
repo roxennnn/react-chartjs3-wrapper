@@ -49,4 +49,6 @@ export interface ChartProps {
   crosshairHorizontalOptions?: ICrosshairPluginOptions;
   /* New */
   transferChartImage: (data: string) => void;
+  /* Other props */
+  otherProps?: any;
 }

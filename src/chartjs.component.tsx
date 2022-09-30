@@ -149,6 +149,7 @@ export const ChartJsComponent = (props: ChartProps) => {
     enableHorizontalCrosshair,
     crosshairHorizontalOptions,
     transferChartImage,
+    otherProps,
   } = props;
 
   /* Create random canvasId */
@@ -219,6 +220,10 @@ export const ChartJsComponent = (props: ChartProps) => {
   }, [chart, data, options, type]);
 
   return (
-    <canvas id={canvasId} style={{ width: '100%', height: '100%' }}></canvas>
+    <canvas
+      id={canvasId}
+      style={{ width: '100%', height: '100%' }}
+      onClick={otherProps?.onClick}
+    ></canvas>
   );
 };
