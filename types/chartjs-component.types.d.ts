@@ -47,8 +47,8 @@ export interface ChartProps {
   crosshairVerticalOptions?: ICrosshairPluginOptions;
   enableHorizontalCrosshair?: boolean;
   crosshairHorizontalOptions?: ICrosshairPluginOptions;
-  /* New */
   transferChartImage: (data: string) => void;
+  onmousemoveHandler?: (chart: Chart) => (mousemove: MouseEvent) => void;
   /* Other props */
   otherProps?: any;
 }

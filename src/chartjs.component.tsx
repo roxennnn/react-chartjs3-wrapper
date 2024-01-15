@@ -9,20 +9,19 @@ import {
   underLinePlugin,
 } from './plugins';
 
-export const ChartJsComponent = (props: ChartProps) => {
-  const {
-    type,
-    data,
-    options,
-    plugins,
-    enableVerticalCrosshair,
-    crosshairVerticalOptions,
-    enableHorizontalCrosshair,
-    crosshairHorizontalOptions,
-    transferChartImage,
-    otherProps,
-  } = props;
-
+export const ChartJsComponent = ({
+  type,
+  data,
+  options,
+  plugins,
+  enableVerticalCrosshair,
+  crosshairVerticalOptions,
+  enableHorizontalCrosshair,
+  crosshairHorizontalOptions,
+  transferChartImage,
+  onmousemoveHandler,
+  otherProps,
+}: ChartProps) => {
   /* Create random canvasId */
   // id will be set once when the component initially renders, but never again
   // (unless you assigned and called the second argument of the tuple)
@@ -59,6 +58,11 @@ export const ChartJsComponent = (props: ChartProps) => {
       },
       plugins: activePlugins,
     });
+
+    if (ctx && onmousemoveHandler) {
+      ctx.onmousemove = onmousemoveHandler(newChart);
+    }
+
     setChart(newChart);
   }, [
     type,
