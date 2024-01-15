@@ -3,7 +3,7 @@ import { ExtendedChart, ICrosshairPluginOptions } from '../types';
 
 export const underLinePlugin = {
     id: 'underline',
-    afterDraw: (chart: any, args: any, opts: any) => {
+    afterDraw: (chart: any, _args: any, opts: any) => {
         const { ctx } = chart;
 
         ctx.save();

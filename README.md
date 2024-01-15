@@ -12,6 +12,8 @@
 npm i react-chartjs3-wrapper
 ```
 
+**TODO: add documentation over underline plugin**
+
 ## Usage
 The following shows how to create a React Chart.js 3 component.
 ```tsx
